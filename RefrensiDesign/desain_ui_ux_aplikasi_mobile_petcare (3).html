@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETCARE+ UI/UX Design Showcase (Curved Glass Navigation)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        sage: {
+                            50: '#F4F8F5',
+                            100: '#E6F0E9',
+                            200: '#CCE0D2',
+                            300: '#ADCBB7',
+                            400: '#8AB398',
+                            500: '#5E9470',
+                            600: '#35744B',
+                            700: '#275A39',
+                            800: '#1D432B',
+                            900: '#122B1B',
+                        },
+                        ivory: '#FCFDFC',
+                        charcoal: '#171C18',
+                        mintAccent: '#75DF95'
+                    },
+                    boxShadow: {
+                        'phone': '0 28px 65px -15px rgba(18, 43, 27, 0.32), 0 0 0 10px #F8FAF8, 0 0 0 11px rgba(255,255,255,0.7)',
+                        'glass': '0 8px 32px -4px rgba(39, 90, 57, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.85)',
+                        'glass-strong': '0 12px 28px -6px rgba(23, 28, 24, 0.09), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.95)',
+                        'pill': '0 12px 24px -6px rgba(53, 116, 75, 0.4)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Dot Matrix Pattern */
+        .dot-matrix-bg {
+            background-image: radial-gradient(#8AB398 1.25px, transparent 1.25px);
+            background-size: 11px 11px;
+        }
+        
+        /* Clean Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.82);
+            box-shadow: 0 10px 26px -6px rgba(39, 90, 57, 0.07), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .glass-pill-soft {
+            background: rgba(236, 245, 239, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 6px 18px -4px rgba(39, 90, 57, 0.06);
+        }
+
+        /* Ultra Transparent Glass Containers (Persis Gambar Referensi Reservasi) */
+        .glass-section-sheer {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.42) 0%, rgba(234, 246, 238, 0.28) 100%);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1.5px solid rgba(255, 255, 255, 0.88);
+            box-shadow: 
+                0 14px 32px -8px rgba(24, 62, 38, 0.07),
+                inset 0 1.5px 3px rgba(255, 255, 255, 0.95);
+        }
+
+        .glass-subcard {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.68) 100%);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(255, 255, 255, 0.92);
+            box-shadow: 
+                0 6px 16px -4px rgba(24, 62, 38, 0.05),
+                inset 0 1px 2px rgba(255, 255, 255, 0.95);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .glass-subcard:hover {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.82) 100%);
+            transform: translateY(-1.5px);
+        }
+
+        .glass-subcard.is-selected {
+            background: linear-gradient(180deg, rgba(206, 239, 216, 0.55) 0%, rgba(232, 248, 237, 0.82) 100%);
+            border: 1.8px solid #2A6B41;
+            box-shadow: 
+                0 8px 20px -4px rgba(42, 107, 65, 0.16),
+                inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
+        }
+
+        .pet-card-footer {
+            background: rgba(255, 255, 255, 0.76);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.85);
+        }
+
+        /* Tiket Berlekuk dengan Glass Feel */
+        .ticket-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 26px;
+        }
+        .ticket-card::before,
+        .ticket-card::after {
+            content: '';
+            position: absolute;
+            top: 55%;
+            width: 20px;
+            height: 20px;
+            background-color: #EAF2EC;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .ticket-card::before { left: -10px; }
+        .ticket-card::after { right: -10px; }
+
+        /* Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Smooth Floating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        /* Barcode Lines Generator */
+        .barcode-vertical {
+            background: repeating-linear-gradient(
+                to bottom,
+                #171C18,
+                #171C18 2px,
+                transparent 2px,
+                transparent 4px,
+                #171C18 4px,
+                #171C18 5px,
+                transparent 5px,
+                transparent 8px,
+                #171C18 8px,
+                #171C18 11px,
+                transparent 11px,
+                transparent 13px
+            );
+        }
+
+        /* ==============================================================
+           CURVED NOTCH BOTTOM NAVIGATION BAR (SESUAI GAMBAR REFERENSI)
+           ============================================================== */
+        .curved-nav-wrapper {
+            position: absolute;
+            bottom: 14px;
+            left: 16px;
+            right: 16px;
+            height: 78px;
+            z-index: 40;
+            user-select: none;
+            filter: drop-shadow(0 12px 22px rgba(20, 52, 31, 0.14));
+        }
+
+        .curved-nav-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 62px;
+            overflow: visible;
+        }
+
+        /* Tombol Tengah (Reservasi) Menonjol di Atas Cekungan */
+        .center-notch-btn {
+            position: absolute;
+            left: 50%;
+            top: -4px;
+            transform: translateX(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 9999px;
+            background: linear-gradient(145deg, #2D6B43, #1D4A2C);
+            box-shadow: 
+                0 8px 18px rgba(29, 74, 44, 0.42),
+                0 0 0 4px rgba(255, 255, 255, 0.45),
+                inset 0 2px 3px rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .center-notch-btn:hover {
+            transform: translateX(-50%) translateY(-2px) scale(1.04);
+        }
+
+        .center-notch-btn.is-active {
+            transform: translateX(-50%) translateY(-6px) scale(1.09);
+            background: linear-gradient(145deg, #357A4D, #194227);
+            box-shadow: 
+                0 12px 24px rgba(29, 74, 44, 0.55),
+                0 0 0 5px rgba(117, 223, 149, 0.45),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Indikator Kapsul Luncur (Sliding Active Pill & Bottom Bar) */
+        .nav-sliding-pill {
+            position: absolute;
+            bottom: 6px;
+            width: 60px;
+            height: 50px;
+            border-radius: 16px;
+            background: rgba(185, 220, 196, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.8);
+            transition: left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, transform 0.35s ease;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .nav-sliding-bar {
+            position: absolute;
+            bottom: 3px;
+            width: 24px;
+            height: 3.5px;
+            border-radius: 999px;
+            background: #225434;
+            transition: left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, transform 0.35s ease;
+            z-index: 25;
+            pointer-events: none;
+        }
+
+        /* Item Menu Navigasi Kiri & Kanan */
+        .nav-item-btn {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 62px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #637368;
+        }
+
+        .nav-item-btn .nav-icon {
+            font-size: 16px;
+            line-height: 1;
+            margin-bottom: 3px;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+        }
+
+        .nav-item-btn .nav-label {
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            transition: all 0.3s ease;
+        }
+
+        /* State Aktif pada Item Menu */
+        .nav-item-btn.is-active {
+            color: #1B4D2E;
+        }
+
+        .nav-item-btn.is-active .nav-icon {
+            transform: translateY(-4px) scale(1.18);
+            color: #1B4D2E;
+        }
+
+        .nav-item-btn.is-active .nav-label {
+            font-weight: 800;
+            color: #1B4D2E;
+            transform: translateY(-1px);
+        }
+
+        /* Keyframe Bounce Saat Diklik */
+        @keyframes iconPopBounce {
+            0% { transform: translateY(0) scale(1); }
+            45% { transform: translateY(-7px) scale(1.26); }
+            75% { transform: translateY(-2px) scale(1.12); }
+            100% { transform: translateY(-4px) scale(1.18); }
+        }
+
+        .animate-nav-pop {
+            animation: iconPopBounce 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes centerOrbPop {
+            0% { transform: translateX(-50%) translateY(0) scale(1); }
+            50% { transform: translateX(-50%) translateY(-9px) scale(1.15); }
+            100% { transform: translateX(-50%) translateY(-6px) scale(1.09); }
+        }
+
+        .animate-orb-pop {
+            animation: centerOrbPop 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#AECEB6] min-h-screen font-sans text-charcoal selection:bg-sage-600 selection:text-white pb-16">
+
+    <!-- Top Navigation Bar / Design Controller -->
+    <header class="sticky top-0 z-50 bg-[#F4F8F5]/85 backdrop-blur-lg border-b border-white/60 px-6 py-3.5 shadow-sm">
+        <div class="max-w-[1640px] mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-sage-600 flex items-center justify-center text-white shadow-md">
+                    <i class="fa-solid fa-paw text-lg"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-extrabold text-lg tracking-tight text-charcoal">PETCARE+</h1>
+                        <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-mintAccent/35 text-sage-800 border border-sage-400/30">Clean Glass UI + Curved Notch Nav</span>
+                    </div>
+                    <p class="text-xs text-sage-800/75">Klik menu pada Bottom Navigation Bar di layar manapun untuk melihat animasi interaktif</p>
+                </div>
+            </div>
+
+            <!-- Filter Mode Tampilan -->
+            <div class="flex items-center gap-1.5 bg-sage-100/90 p-1.5 rounded-full border border-white/80 shadow-inner">
+                <button onclick="switchMode('all')" id="mode-all" class="mode-tab px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-sage-600 text-white shadow-sm">
+                    Semua Layar (5)
+                </button>
+                <button onclick="switchMode('single', 'beranda')" id="mode-beranda" class="mode-tab px-3.5 py-1.5 rounded-full text-xs font-semibold text-sage-800 hover:bg-white/60 transition-all">
+                    1. Beranda
+                </button>
+                <button onclick="switchMode('single', 'hewan')" id="mode-hewan" class="mode-tab px-3.5 py-1.5 rounded-full text-xs font-semibold text-sage-800 hover:bg-white/60 transition-all">
+                    2. Hewan Saya
+                </button>
+                <button onclick="switchMode('single', 'reservasi')" id="mode-reservasi" class="mode-tab px-3.5 py-1.5 rounded-full text-xs font-semibold text-sage-800 hover:bg-white/60 transition-all">
+                    3. Reservasi
+                </button>
+                <button onclick="switchMode('single', 'antrean')" id="mode-antrean" class="mode-tab px-3.5 py-1.5 rounded-full text-xs font-semibold text-sage-800 hover:bg-white/60 transition-all">
+                    4. Antrean
+                </button>
+                <button onclick="switchMode('single', 'profil')" id="mode-profil" class="mode-tab px-3.5 py-1.5 rounded-full text-xs font-semibold text-sage-800 hover:bg-white/60 transition-all">
+                    5. Profil & Riwayat
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Mockup Presentation Canvas -->
+    <main class="max-w-[1720px] mx-auto px-6 pt-8">
+        
+        <!-- PHONE MOCKUPS CONTAINER -->
+        <div id="mockup-grid" class="flex flex-wrap justify-center items-start gap-9">
+
+            <!-- =======================================================================
+                 1. HALAMAN BERANDA (Explore)
+                 ======================================================================= -->
+            <div id="card-beranda" class="mockup-item flex flex-col items-center">
+                <div class="mb-3 flex items-center gap-2 bg-white/55 backdrop-blur-md px-4 py-1 rounded-full border border-white/70 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-sage-600"></span>
+                    <span class="text-xs font-bold text-sage-900 tracking-wide uppercase">1. Beranda / Explore</span>
+                </div>
+
+                <!-- Smartphone Frame -->
+                <div class="w-[348px] h-[750px] bg-gradient-to-b from-[#EFF5F1] via-[#E9F2EC] to-[#DFECE3] rounded-[50px] shadow-phone relative overflow-hidden flex flex-col select-none">
+                    
+                    <!-- Status Bar -->
+                    <div class="px-8 pt-4 pb-2 flex justify-between items-center text-xs font-bold text-charcoal z-20 shrink-0">
+                        <span>9:41</span>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-signal text-[10px]"></i>
+                            <i class="fa-solid fa-wifi text-[10px]"></i>
+                            <i class="fa-solid fa-battery-full text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Clean Content (Bottom padded for Curved Nav) -->
+                    <div class="px-6 pt-1 pb-28 flex-1 overflow-y-auto no-scrollbar flex flex-col justify-between">
+                        
+                        <!-- Top Header Bar -->
+                        <div class="flex justify-between items-center">
+                            <div class="glass-card px-3.5 py-2 rounded-full flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-sage-600 text-white flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-paw"></i>
+                                </div>
+                                <span class="text-xs font-extrabold tracking-tight text-charcoal">PETCARE+</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <button onclick="handleNavClick('profil')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-charcoal hover:scale-105 transition">
+                                    <i class="fa-regular fa-bell text-sm"></i>
+                                </button>
+                                <div onclick="handleNavClick('hewan')" class="w-10 h-10 rounded-full bg-sage-300 p-0.5 shadow-sm cursor-pointer overflow-hidden border border-white">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80" alt="Owner" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/100x100/35744B/FFF?text=N'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hero Greeting + Vertical Capsule Search (Spacious & Clean) -->
+                        <div class="flex justify-between items-start mt-4">
+                            <div>
+                                <p class="text-xs font-bold text-sage-600 mb-1">Halo, Nadia Putri 👋</p>
+                                <h2 class="text-[30px] font-extrabold leading-[1.1] tracking-tight text-charcoal">
+                                    Care for<br>Your Pet,<br>Smarter
+                                </h2>
+                                <p class="text-xs text-charcoal/60 font-medium mt-2">
+                                    Reservasi & pantau kesehatan hewan
+                                </p>
+                            </div>
+                            <!-- Vertical Dark Pill Button Persis Referensi -->
+                            <button onclick="handleNavClick('reservasi')" title="Cari Layanan" class="w-13 px-4 h-24 rounded-full bg-charcoal text-white shadow-lg flex items-center justify-center hover:bg-sage-800 transition-all shrink-0 mt-1">
+                                <i class="fa-solid fa-magnifying-glass text-base"></i>
+                            </button>
+                        </div>
+
+                        <!-- Dot-Matrix Map + Clean Floating Pet Card -->
+                        <div class="relative my-3 py-3 dot-matrix-bg rounded-3xl flex flex-col items-center justify-center">
+                            <svg class="w-full h-24 overflow-visible" viewBox="0 0 280 90" fill="none">
+                                <path d="M 28 62 C 85 102, 110 8, 165 45 C 205 74, 235 42, 258 32" stroke="#2D5A3C" stroke-width="1.8" stroke-dasharray="4 4" fill="none"/>
+                                
+                                <!-- Pin Kiri -->
+                                <g transform="translate(16, 32)">
+                                    <path d="M13 0C5.8 0 0 5.8 0 13C0 22.5 13 31 13 31C13 31 26 22.5 26 13C26 5.8 20.2 0 13 0Z" fill="#35744B"/>
+                                    <circle cx="13" cy="13" r="5.5" fill="#EDF3EE"/>
+                                </g>
+
+                                <!-- Vet & Pet Illustration Center -->
+                                <g transform="translate(132, 8)" class="animate-float">
+                                    <circle cx="27" cy="27" r="25" fill="#FFFFFF" opacity="0.9"/>
+                                    <circle cx="27" cy="27" r="21" fill="#CCE0D2"/>
+                                    <path d="M17 21 L20 14 L25 19 L29 19 L34 14 L37 21 C39 27 37 36 27 36 C17 36 15 27 17 21 Z" fill="#35744B"/>
+                                    <circle cx="23" cy="25" r="2" fill="#FFF"/>
+                                    <circle cx="31" cy="25" r="2" fill="#FFF"/>
+                                    <polygon points="27,28 25,30 29,30" fill="#FFB4A2"/>
+                                    <circle cx="41" cy="13" r="6.5" fill="#171C18"/>
+                                    <path d="M41 10 V16 M38 13 H44" stroke="#75DF95" stroke-width="2" stroke-linecap="round"/>
+                                </g>
+
+                                <!-- Paw Kanan -->
+                                <g transform="translate(246, 22) rotate(18)">
+                                    <circle cx="8" cy="8" r="8" fill="#171C18"/>
+                                    <circle cx="8" cy="9" r="2.8" fill="#FFF"/>
+                                    <circle cx="5.5" cy="5.5" r="1.2" fill="#FFF"/>
+                                    <circle cx="8" cy="4.5" r="1.2" fill="#FFF"/>
+                                    <circle cx="10.5" cy="5.5" r="1.2" fill="#FFF"/>
+                                </g>
+                            </svg>
+
+                            <!-- Glass Summary Pet Chip -->
+                            <div onclick="handleNavClick('hewan')" class="w-[94%] glass-card px-4 py-2.5 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-white/80 transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-sage-200/80 flex items-center justify-center text-lg">🐱</div>
+                                    <div>
+                                        <p class="text-xs font-extrabold text-charcoal">Mochi • British Shorthair</p>
+                                        <p class="text-[10px] text-sage-700 font-semibold">Kondisi Sehat • Vaksin Aktif</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-extrabold bg-mintAccent/40 text-sage-900 px-2.5 py-1 rounded-full">2 Thn</span>
+                            </div>
+                        </div>
+
+                        <!-- Layanan Populer (Glass Container) -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2.5">
+                                <h3 class="text-sm font-extrabold text-charcoal">Layanan Populer</h3>
+                                <button onclick="handleNavClick('reservasi')" class="text-xs font-semibold text-sage-700 hover:underline">Pilih Layanan</button>
+                            </div>
+
+                            <div class="glass-card p-3.5 rounded-[28px]">
+                                <div class="grid grid-cols-3 gap-2.5">
+                                    <!-- Card 1 -->
+                                    <div onclick="handleNavClick('reservasi')" class="group relative h-28 rounded-2xl overflow-hidden cursor-pointer bg-sage-800 shadow-sm">
+                                        <img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=300&auto=format&fit=crop&q=80" alt="Checkup" class="w-full h-full object-cover opacity-85 group-hover:scale-110 transition duration-300" onerror="this.style.display='none'">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-2.5 flex flex-col justify-between">
+                                            <span class="text-[10px] font-bold text-white">Checkup</span>
+                                            <div class="w-6 h-6 rounded-full bg-white/25 backdrop-blur-md self-center flex items-center justify-center text-white text-[10px]">
+                                                <i class="fa-solid fa-stethoscope"></i>
+                                            </div>
+                                            <div class="flex items-center gap-1">
+                                                <span class="w-2 h-2 rounded-full bg-mintAccent"></span>
+                                                <span class="text-[9px] text-white/90 font-semibold">Umum</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 2 -->
+                                    <div onclick="handleNavClick('reservasi')" class="group relative h-28 rounded-2xl overflow-hidden cursor-pointer bg-sage-700 shadow-sm">
+                                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&auto=format&fit=crop&q=80" alt="Vaccine" class="w-full h-full object-cover opacity-85 group-hover:scale-110 transition duration-300" onerror="this.style.display='none'">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-2.5 flex flex-col justify-between">
+                                            <span class="text-[10px] font-bold text-white">Vaksinasi</span>
+                                            <div class="w-6 h-6 rounded-full bg-white/25 backdrop-blur-md self-center flex items-center justify-center text-white text-[10px]">
+                                                <i class="fa-solid fa-syringe"></i>
+                                            </div>
+                                            <div class="flex items-center gap-1">
+                                                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                                <span class="text-[9px] text-white/90 font-semibold">Imunisasi</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 3 -->
+                                    <div onclick="handleNavClick('reservasi')" class="group relative h-28 rounded-2xl overflow-hidden cursor-pointer bg-sage-900 shadow-sm">
+                                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=300&auto=format&fit=crop&q=80" alt="Consult" class="w-full h-full object-cover opacity-85 group-hover:scale-110 transition duration-300" onerror="this.style.display='none'">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-2.5 flex flex-col justify-between">
+                                            <span class="text-[10px] font-bold text-white">Konsultasi</span>
+                                            <div class="w-6 h-6 rounded-full bg-white/25 backdrop-blur-md self-center flex items-center justify-center text-white text-[10px]">
+                                                <i class="fa-solid fa-user-doctor"></i>
+                                            </div>
+                                            <div class="flex items-center gap-1">
+                                                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                                                <span class="text-[9px] text-white/90 font-semibold">Spesialis</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3 Feature Highlights -->
+                                <div class="grid grid-cols-3 gap-2 pt-3 mt-3 border-t border-sage-200/60 text-center">
+                                    <div class="flex flex-col items-center">
+                                        <i class="fa-solid fa-calendar-check text-sage-700 text-xs mb-1"></i>
+                                        <span class="text-[9.5px] font-semibold text-charcoal/75">Jadwal Pintar</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <i class="fa-solid fa-wand-magic-sparkles text-sage-700 text-xs mb-1"></i>
+                                        <span class="text-[9.5px] font-semibold text-charcoal/75">Ingat Vaksin</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <i class="fa-solid fa-arrows-rotate text-sage-700 text-xs mb-1"></i>
+                                        <span class="text-[9.5px] font-semibold text-charcoal/75">Live Antrean</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CURVED NOTCH BOTTOM NAVIGATION BAR -->
+                    <div class="curved-nav-wrapper" data-active="beranda"></div>
+                </div>
+            </div>
+
+
+            <!-- =======================================================================
+                 2. HALAMAN HEWAN SAYA (Dashboard Pemilik Hewan)
+                 ======================================================================= -->
+            <div id="card-hewan" class="mockup-item flex flex-col items-center">
+                <div class="mb-3 flex items-center gap-2 bg-white/55 backdrop-blur-md px-4 py-1 rounded-full border border-white/70 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-sage-600"></span>
+                    <span class="text-xs font-bold text-sage-900 tracking-wide uppercase">2. Hewan Saya (Dashboard)</span>
+                </div>
+
+                <!-- Smartphone Frame -->
+                <div class="w-[348px] h-[750px] bg-[#F7FAF8] rounded-[50px] shadow-phone relative overflow-hidden flex flex-col select-none">
+                    
+                    <!-- Top Illustrated Hero Section -->
+                    <div class="relative h-[305px] bg-gradient-to-b from-[#DCE9DF] via-[#C1DBC8] to-[#93BC9E] px-6 pt-4 flex flex-col justify-between overflow-hidden shrink-0">
+                        
+                        <svg class="absolute inset-0 w-full h-full object-cover pointer-events-none" viewBox="0 0 348 305" fill="none">
+                            <circle cx="280" cy="85" r="40" fill="#F3F9F5" opacity="0.65"/>
+                            <circle cx="60" cy="220" r="65" fill="#9EC3A8" opacity="0.5"/>
+                            <circle cx="170" cy="200" r="75" fill="#85B192" opacity="0.45"/>
+                            <path d="M -20 272 Q 174 230 368 276 L 368 315 L -20 315 Z" fill="#F7FAF8"/>
+                            <path d="M -20 267 Q 174 224 368 271" stroke="#35744B" stroke-width="4.5" fill="none" opacity="0.65"/>
+                        </svg>
+
+                        <!-- Status Bar -->
+                        <div class="px-2 flex justify-between items-center text-xs font-bold text-charcoal z-20">
+                            <span>9:41</span>
+                            <div class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-signal text-[10px]"></i>
+                                <i class="fa-solid fa-wifi text-[10px]"></i>
+                                <i class="fa-solid fa-battery-full text-xs"></i>
+                            </div>
+                        </div>
+
+                        <!-- Top Action Icons -->
+                        <div class="flex justify-between items-center z-20">
+                            <div class="glass-card px-3.5 py-1.5 rounded-full flex items-center gap-2">
+                                <span class="text-xs font-extrabold text-charcoal">Hewan Peliharaan</span>
+                            </div>
+                            <button onclick="handleNavClick('profil')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-charcoal relative">
+                                <i class="fa-regular fa-bell text-sm"></i>
+                                <span class="w-2 h-2 rounded-full bg-orange-500 absolute top-2 right-2"></span>
+                            </button>
+                        </div>
+
+                        <!-- Frosted Glass Pet Card + 3D Pet Care Pod Illustration -->
+                        <div class="z-20 mb-6 relative">
+                            <h2 class="text-xl font-extrabold text-charcoal tracking-tight mb-2">Mochi & Milo</h2>
+                            
+                            <div class="flex items-end justify-between relative">
+                                <!-- Glassmorphism Pet Info Card -->
+                                <div class="glass-card rounded-[24px] p-3.5 w-[176px] space-y-2 z-20">
+                                    <div class="flex items-center gap-2 text-xs font-extrabold text-charcoal">
+                                        <span class="w-5 h-5 rounded-full bg-sage-600/15 text-sage-800 flex items-center justify-center text-[10px]">
+                                            <i class="fa-solid fa-paw"></i>
+                                        </span>
+                                        <span class="truncate">Mochi (Kucing)</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs font-semibold text-charcoal/80">
+                                        <span class="w-5 h-5 rounded-full bg-sage-600/15 text-sage-800 flex items-center justify-center text-[10px]">
+                                            <i class="fa-regular fa-calendar"></i>
+                                        </span>
+                                        <span>Umur 2 Tahun</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs font-bold text-sage-700">
+                                        <span class="w-5 h-5 rounded-full bg-sage-600/15 text-sage-800 flex items-center justify-center text-[10px]">
+                                            <i class="fa-solid fa-shield-heart"></i>
+                                        </span>
+                                        <span>Vaksin Lengkap</span>
+                                    </div>
+                                </div>
+
+                                <!-- 3D Pet Care Pod Illustration -->
+                                <div class="absolute -right-2 -bottom-2 w-[150px] h-[118px] flex items-center justify-center z-20 animate-float">
+                                    <svg viewBox="0 0 180 140" class="w-full h-full drop-shadow-md">
+                                        <rect x="20" y="62" width="138" height="48" rx="24" fill="#2E6F40"/>
+                                        <path d="M 38 62 C 48 34, 120 34, 135 62 Z" fill="#46925B"/>
+                                        <circle cx="68" cy="52" r="16" fill="#FAF8F5"/>
+                                        <polygon points="55,42 58,28 67,38" fill="#FAF8F5"/>
+                                        <polygon points="81,42 78,28 69,38" fill="#FAF8F5"/>
+                                        <circle cx="63" cy="51" r="2.2" fill="#181C19"/>
+                                        <circle cx="73" cy="51" r="2.2" fill="#181C19"/>
+                                        <polygon points="68,54 66,57 70,57" fill="#F28482"/>
+                                        <circle cx="106" cy="50" r="17" fill="#E9C46A"/>
+                                        <ellipse cx="91" cy="52" rx="5" ry="11" fill="#C99E3A"/>
+                                        <ellipse cx="121" cy="52" rx="5" ry="11" fill="#C99E3A"/>
+                                        <circle cx="101" cy="48" r="2.2" fill="#181C19"/>
+                                        <circle cx="111" cy="48" r="2.2" fill="#181C19"/>
+                                        <circle cx="106" cy="53" r="3" fill="#181C19"/>
+                                        <rect x="28" y="80" width="122" height="6" rx="3" fill="#75DF95"/>
+                                        <circle cx="89" cy="86" r="11" fill="#FFFFFF"/>
+                                        <path d="M89 81 V91 M84 86 H94" stroke="#2E6F40" stroke-width="2.8" stroke-linecap="round"/>
+                                        <circle cx="52" cy="110" r="16" fill="#181C19"/>
+                                        <circle cx="52" cy="110" r="9" fill="#CBD5E1"/>
+                                        <circle cx="126" cy="110" r="16" fill="#181C19"/>
+                                        <circle cx="126" cy="110" r="9" fill="#CBD5E1"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Half: Clean Glass Timeline Menu -->
+                    <div class="px-6 pb-28 flex-1 flex flex-col justify-between relative dot-matrix-bg">
+                        
+                        <!-- Floating Mint Reminder Pill -->
+                        <div class="-mt-4 flex justify-center z-30">
+                            <div class="px-5 py-2 rounded-full bg-mintAccent shadow-md border-2 border-white flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-sage-900 text-xs"></i>
+                                <span class="text-xs font-extrabold text-sage-900">Vaksin Rabies • 18 Mei</span>
+                            </div>
+                        </div>
+
+                        <!-- Clean 3 Glass Pill Cards with Breathing Room -->
+                        <div class="relative flex items-center my-auto py-2">
+                            <!-- Vertical Timeline -->
+                            <div class="flex flex-col items-center mr-3.5 self-stretch py-3">
+                                <div class="w-4 h-4 rounded-full bg-sage-600 text-white flex items-center justify-center text-[8px] shadow-sm">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div class="w-0.5 flex-1 bg-sage-300 my-1.5"></div>
+                                <div class="w-4 h-4 rounded-full bg-sage-600 text-white flex items-center justify-center text-[8px] shadow-sm">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div class="w-0.5 flex-1 bg-sage-300 my-1.5"></div>
+                                <div class="w-4 h-4 rounded-full border-2 border-sage-500 bg-white"></div>
+                            </div>
+
+                            <!-- 3 Spacious Glass Pills -->
+                            <div class="flex-1 space-y-3.5 z-10">
+                                <div onclick="handleNavClick('antrean')" class="glass-card hover:bg-white/90 cursor-pointer transition rounded-full px-4 py-3 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-full bg-sage-100/90 flex items-center justify-center text-sage-700 text-xs">
+                                            <i class="fa-solid fa-calendar-day"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xs font-extrabold text-charcoal">Jadwal Pemeriksaan</h4>
+                                            <p class="text-[10.5px] text-charcoal/65 font-medium">12 Mei, 08:40 • drh. Clara</p>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-charcoal/40 text-xs mr-1"></i>
+                                </div>
+
+                                <div onclick="handleNavClick('profil')" class="glass-card hover:bg-white/90 cursor-pointer transition rounded-full px-4 py-3 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-full bg-sage-100/90 flex items-center justify-center text-sage-700 text-xs">
+                                            <i class="fa-solid fa-syringe"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xs font-extrabold text-charcoal">Pengingat Vaksinasi</h4>
+                                            <p class="text-[10.5px] text-charcoal/65 font-medium">Booster Tahunan • Terjadwal</p>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-charcoal/40 text-xs mr-1"></i>
+                                </div>
+
+                                <div onclick="handleNavClick('profil')" class="glass-card hover:bg-white/90 cursor-pointer transition rounded-full px-4 py-3 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-full bg-sage-100/90 flex items-center justify-center text-sage-700 text-xs">
+                                            <i class="fa-solid fa-notes-medical"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xs font-extrabold text-charcoal">Rekam Medis Hewan</h4>
+                                            <p class="text-[10.5px] text-charcoal/65 font-medium">4 Riwayat Pemeriksaan</p>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-charcoal/40 text-xs mr-1"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CURVED NOTCH BOTTOM NAVIGATION BAR -->
+                    <div class="curved-nav-wrapper" data-active="hewan"></div>
+                </div>
+            </div>
+
+
+            <!-- =======================================================================
+                 3. HALAMAN RESERVASI PEMERIKSAAN (Tombol Tengah Utama)
+                 ======================================================================= -->
+            <div id="card-reservasi" class="mockup-item flex flex-col items-center">
+                <div class="mb-3 flex items-center gap-2 bg-white/55 backdrop-blur-md px-4 py-1 rounded-full border border-white/70 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-sage-600"></span>
+                    <span class="text-xs font-bold text-sage-900 tracking-wide uppercase">3. Reservasi Pemeriksaan</span>
+                </div>
+
+                <!-- Smartphone Frame -->
+                <div class="w-[348px] h-[750px] bg-gradient-to-b from-[#EFF5F1] via-[#E9F2EC] to-[#DFECE3] rounded-[50px] shadow-phone relative overflow-hidden flex flex-col select-none">
+                    
+                    <!-- Status Bar -->
+                    <div class="px-8 pt-4 pb-2 flex justify-between items-center text-xs font-bold text-charcoal z-20 shrink-0">
+                        <span>9:41</span>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-signal text-[10px]"></i>
+                            <i class="fa-solid fa-wifi text-[10px]"></i>
+                            <i class="fa-solid fa-battery-full text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Clean & Uncluttered Reservation Content -->
+                    <div class="px-5 pt-1 pb-28 flex-1 overflow-y-auto no-scrollbar flex flex-col justify-between gap-2.5">
+                        
+                        <!-- Header Ringkas -->
+                        <div class="flex justify-between items-center px-1">
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-sage-700">Layanan Klinik</span>
+                                <h2 class="text-xl font-extrabold text-charcoal tracking-tight leading-tight">Reservasi Pemeriksaan</h2>
+                            </div>
+                            <div class="w-9 h-9 rounded-2xl glass-card flex items-center justify-center text-base shadow-sm">
+                                🩺
+                            </div>
+                        </div>
+
+                        <!-- ===============================================================
+                             1. PILIH HEWAN PELIHARAAN (Ultra-Transparent Glass Card)
+                             =============================================================== -->
+                        <div class="glass-section-sheer p-3.5 rounded-[28px] relative overflow-hidden">
+                            <!-- Ambient Soft Glow -->
+                            <div class=" -top-10 -left-10 w-28 h-28 rounded-full bg-white/40 blur-xl pointer-events-none absolute"></div>
+
+                            <!-- Header Section 1 -->
+                            <div class="flex items-center justify-between mb-3 relative z-10">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-6 h-6 rounded-full bg-[#1E5634] text-white text-xs font-extrabold flex items-center justify-center shadow-sm">1</span>
+                                    <div>
+                                        <h3 class="text-[13px] font-extrabold text-charcoal leading-tight">Pilih Hewan Peliharaan</h3>
+                                        <p class="text-[10px] text-charcoal/60 font-medium">Hewan yang akan diperiksa</p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="handleNavClick('hewan')" class="text-[10.5px] font-bold text-[#1E5634] hover:text-sage-900 flex items-center gap-1 transition">
+                                    <span>Tambah Hewan</span>
+                                    <i class="fa-solid fa-plus text-[9.5px]"></i>
+                                </button>
+                            </div>
+
+                            <!-- 4 Kolom Kartu Hewan Ultra-Transparan Persis Gambar Referensi -->
+                            <div class="grid grid-cols-4 gap-2 relative z-10">
+                                <!-- Pet 1: Mochi (Selected) -->
+                                <button type="button" onclick="selectPet(this, 'Mochi')" class="pet-option glass-subcard is-selected rounded-[20px] overflow-hidden flex flex-col justify-between relative text-center h-[108px] p-0">
+                                    <span class="pet-check absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#1E5634] text-white text-[8px] flex items-center justify-center shadow-sm z-20">
+                                        <i class="fa-solid fa-check"></i>
+                                    </span>
+                                    <div class="w-full h-[58px] pt-1.5 px-1.5 flex items-end justify-center overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=160&auto=format&fit=crop&q=80" alt="Mochi" class="w-12 h-12 rounded-t-xl object-cover object-top drop-shadow-sm" onerror="this.outerHTML='<span class=\'text-2xl\'>🐱</span>'">
+                                    </div>
+                                    <div class="pet-card-footer w-full py-1.5 px-1 flex flex-col items-center rounded-t-[12px]">
+                                        <span class="text-[10.5px] font-extrabold text-charcoal leading-tight">Mochi</span>
+                                        <span class="pet-badge mt-0.5 px-2 py-0.5 rounded-full bg-[#D3E8DA] text-[#1E5634] text-[8px] font-bold leading-none">Kucing</span>
+                                    </div>
+                                </button>
+
+                                <!-- Pet 2: Buddy -->
+                                <button type="button" onclick="selectPet(this, 'Buddy')" class="pet-option glass-subcard rounded-[20px] overflow-hidden flex flex-col justify-between relative text-center h-[108px] p-0">
+                                    <span class="pet-check hidden absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#1E5634] text-white text-[8px] items-center justify-center shadow-sm z-20">
+                                        <i class="fa-solid fa-check"></i>
+                                    </span>
+                                    <div class="w-full h-[58px] pt-1.5 px-1.5 flex items-end justify-center overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=160&auto=format&fit=crop&q=80" alt="Buddy" class="w-12 h-12 rounded-t-xl object-cover object-top drop-shadow-sm" onerror="this.outerHTML='<span class=\'text-2xl\'>🐶</span>'">
+                                    </div>
+                                    <div class="pet-card-footer w-full py-1.5 px-1 flex flex-col items-center rounded-t-[12px]">
+                                        <span class="text-[10.5px] font-extrabold text-charcoal leading-tight">Buddy</span>
+                                        <span class="pet-badge mt-0.5 px-2 py-0.5 rounded-full bg-slate-200/80 text-charcoal/65 text-[8px] font-bold leading-none">Anjing</span>
+                                    </div>
+                                </button>
+
+                                <!-- Pet 3: Luna -->
+                                <button type="button" onclick="selectPet(this, 'Luna')" class="pet-option glass-subcard rounded-[20px] overflow-hidden flex flex-col justify-between relative text-center h-[108px] p-0">
+                                    <span class="pet-check hidden absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#1E5634] text-white text-[8px] items-center justify-center shadow-sm z-20">
+                                        <i class="fa-solid fa-check"></i>
+                                    </span>
+                                    <div class="w-full h-[58px] pt-1.5 px-1.5 flex items-end justify-center overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=160&auto=format&fit=crop&q=80" alt="Luna" class="w-12 h-12 rounded-t-xl object-cover object-top drop-shadow-sm" onerror="this.outerHTML='<span class=\'text-2xl\'>🐱</span>'">
+                                    </div>
+                                    <div class="pet-card-footer w-full py-1.5 px-1 flex flex-col items-center rounded-t-[12px]">
+                                        <span class="text-[10.5px] font-extrabold text-charcoal leading-tight">Luna</span>
+                                        <span class="pet-badge mt-0.5 px-2 py-0.5 rounded-full bg-slate-200/80 text-charcoal/65 text-[8px] font-bold leading-none">Kucing</span>
+                                    </div>
+                                </button>
+
+                                <!-- Card 4: Tambah Hewan -->
+                                <button type="button" onclick="handleNavClick('hewan')" class="glass-subcard rounded-[20px] p-2 flex flex-col items-center justify-center text-center h-[108px] group">
+                                    <i class="fa-solid fa-plus text-lg text-[#1E5634] mb-1.5 group-hover:scale-110 transition"></i>
+                                    <span class="text-[9.5px] font-semibold text-[#1E5634] leading-tight">Tambah<br>Hewan</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ===============================================================
+                             2. JENIS PEMERIKSAAN (Ultra-Transparent Glass Card - 5 Kolom)
+                             =============================================================== -->
+                        <div class="glass-section-sheer p-3.5 rounded-[28px] relative overflow-hidden">
+                            <!-- Ambient Soft Glow -->
+                            <div class="-bottom-10 -right-10 w-28 h-28 rounded-full bg-white/40 blur-xl pointer-events-none absolute"></div>
+
+                            <!-- Header Section 2 -->
+                            <div class="flex items-center gap-2.5 mb-3 relative z-10">
+                                <span class="w-6 h-6 rounded-full bg-[#1E5634] text-white text-xs font-extrabold flex items-center justify-center shadow-sm">2</span>
+                                <div>
+                                    <h3 class="text-[13px] font-extrabold text-charcoal leading-tight">Jenis Pemeriksaan</h3>
+                                    <p class="text-[10px] text-charcoal/60 font-medium">Pilih layanan yang dibutuhkan</p>
+                                </div>
+                            </div>
+
+                            <!-- 5 Kolom Kartu Layanan Transparan Rapi Persis Gambar Referensi -->
+                            <div class="grid grid-cols-5 gap-1.5 relative z-10">
+                                <!-- Layanan 1: Pemeriksaan Umum -->
+                                <button type="button" onclick="selectService(this, 'Pemeriksaan Umum')" class="service-chip glass-subcard is-selected rounded-[18px] py-2.5 px-1 flex flex-col items-center justify-between text-center h-[78px]">
+                                    <i class="fa-solid fa-stethoscope text-[18px] text-[#2A85B5] mt-1"></i>
+                                    <span class="service-title text-[8.5px] font-extrabold text-[#164A2B] leading-[1.15]">Pemeriksaan<br>Umum</span>
+                                </button>
+
+                                <!-- Layanan 2: Vaksinasi -->
+                                <button type="button" onclick="selectService(this, 'Vaksinasi')" class="service-chip glass-subcard rounded-[18px] py-2.5 px-1 flex flex-col items-center justify-between text-center h-[78px]">
+                                    <i class="fa-solid fa-syringe text-[17px] text-[#2A6B41] mt-1"></i>
+                                    <span class="service-title text-[8.5px] font-semibold text-charcoal/80 leading-[1.15] mb-1">Vaksinasi</span>
+                                </button>
+
+                                <!-- Layanan 3: Perawatan Lanjutan -->
+                                <button type="button" onclick="selectService(this, 'Perawatan Lanjutan')" class="service-chip glass-subcard rounded-[18px] py-2.5 px-1 flex flex-col items-center justify-between text-center h-[78px]">
+                                    <i class="fa-solid fa-paw text-[18px] text-[#1E5634] mt-1"></i>
+                                    <span class="service-title text-[8.5px] font-semibold text-charcoal/80 leading-[1.15]">Perawatan<br>Lanjutan</span>
+                                </button>
+
+                                <!-- Layanan 4: Grooming -->
+                                <button type="button" onclick="selectService(this, 'Grooming')" class="service-chip glass-subcard rounded-[18px] py-2.5 px-1 flex flex-col items-center justify-between text-center h-[78px]">
+                                    <i class="fa-solid fa-scissors text-[17px] text-[#2B6E70] mt-1"></i>
+                                    <span class="service-title text-[8.5px] font-semibold text-charcoal/80 leading-[1.15] mb-1">Grooming</span>
+                                </button>
+
+                                <!-- Layanan 5: Lainnya -->
+                                <button type="button" onclick="selectService(this, 'Lainnya')" class="service-chip glass-subcard rounded-[18px] py-2.5 px-1 flex flex-col items-center justify-between text-center h-[78px]">
+                                    <i class="fa-solid fa-ellipsis text-[18px] text-[#1E5634] mt-1.5"></i>
+                                    <span class="service-title text-[8.5px] font-semibold text-charcoal/80 leading-[1.15] mb-1">Lainnya</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 3. Dokter & Jadwal Praktik (Compact Glass Card) -->
+                        <div class="glass-section-sheer p-3 rounded-[22px] flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=120&auto=format&fit=crop&q=80" alt="Drh Clara" class="w-10 h-10 rounded-xl object-cover shadow-sm border border-white" onerror="this.src='https://placehold.co/100x100/35744B/FFF?text=Dr'">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <h4 class="text-xs font-extrabold text-charcoal">drh. Clara Wijaya</h4>
+                                        <span class="text-[8.5px] font-extrabold bg-mintAccent/45 text-sage-900 px-2 py-0.5 rounded-full">12 Mei • 08:40</span>
+                                    </div>
+                                    <p class="text-[10px] text-charcoal/65 font-medium mt-0.5">Spesialis Hewan Kecil • Antrean A-04</p>
+                                </div>
+                            </div>
+                            <div class="w-6 h-6 rounded-full bg-sage-700 text-white flex items-center justify-center text-[10px] shadow-sm shrink-0">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+
+                        <!-- Tombol Konfirmasi dengan Ringkasan Terintegrasi -->
+                        <button onclick="handleNavClick('antrean')" class="w-full py-3 px-4 rounded-full bg-sage-700 hover:bg-sage-800 text-white font-bold text-xs shadow-pill transition flex items-center justify-between">
+                            <span id="summary-text" class="font-extrabold truncate mr-2">Konfirmasi: Mochi • Pemeriksaan</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-[10.5px] font-extrabold shrink-0">Lanjut <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </button>
+
+                    </div>
+
+                    <!-- CURVED NOTCH BOTTOM NAVIGATION BAR -->
+                    <div class="curved-nav-wrapper" data-active="reservasi"></div>
+                </div>
+            </div>
+
+
+            <!-- =======================================================================
+                 4. HALAMAN ANTREAN & DETAIL RESERVASI
+                 ======================================================================= -->
+            <div id="card-antrean" class="mockup-item flex flex-col items-center">
+                <div class="mb-3 flex items-center gap-2 bg-white/55 backdrop-blur-md px-4 py-1 rounded-full border border-white/70 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-sage-600"></span>
+                    <span class="text-xs font-bold text-sage-900 tracking-wide uppercase">4. Antrean & Status Layanan</span>
+                </div>
+
+                <!-- Smartphone Frame -->
+                <div class="w-[348px] h-[750px] bg-gradient-to-b from-[#EFF5F1] via-[#E9F2EC] to-[#DFECE3] rounded-[50px] shadow-phone relative overflow-hidden flex flex-col select-none">
+                    
+                    <!-- Decorative Top-Right Winding Clinic Path Illustration -->
+                    <svg class="absolute top-10 right-0 w-44 h-40 pointer-events-none z-0" viewBox="0 0 180 165" fill="none">
+                        <path d="M 60 15 Q 130 25 110 55 Q 85 85 155 110 L 180 120 L 180 0 L 60 0 Z" fill="#D5E5D9" opacity="0.7"/>
+                        <path d="M 55 20 Q 125 30 105 58 Q 82 88 165 112" stroke="#B7D1BE" stroke-width="15" stroke-linecap="round" fill="none"/>
+                        <path d="M 55 20 Q 125 30 105 58 Q 82 88 165 112" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+                        <circle cx="142" cy="45" r="5.5" fill="#528C65"/>
+                        <circle cx="88" cy="42" r="4.5" fill="#689B78"/>
+                    </svg>
+
+                    <!-- Status Bar -->
+                    <div class="px-8 pt-4 pb-2 flex justify-between items-center text-xs font-bold text-charcoal z-20 shrink-0">
+                        <span>9:41</span>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-signal text-[10px]"></i>
+                            <i class="fa-solid fa-wifi text-[10px]"></i>
+                            <i class="fa-solid fa-battery-full text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Clean Queue & Ticket Content -->
+                    <div class="px-6 pt-1 pb-28 flex-1 overflow-y-auto no-scrollbar flex flex-col justify-between z-10">
+                        
+                        <!-- Heading -->
+                        <div class="flex justify-between items-end mt-1">
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-sage-700">Live Monitoring</span>
+                                <h2 class="text-2xl font-extrabold text-charcoal tracking-tight">Siap Diperiksa...</h2>
+                                <p class="text-xs text-charcoal/60 font-medium">Klinik • Dokter • Nomor Antrean</p>
+                            </div>
+                            <button onclick="cycleQueueStatus()" class="bg-sage-700 text-white px-3 py-1.5 rounded-full text-[10px] font-bold shadow-sm flex items-center gap-1.5 hover:bg-sage-800 transition">
+                                <i class="fa-solid fa-rotate text-mintAccent"></i> Simulasi Status
+                            </button>
+                        </div>
+
+                        <!-- 3 Glass Info Widgets (Persis Referensi Kanan) -->
+                        <div class="grid grid-cols-3 gap-2.5">
+                            <div class="glass-card p-3 rounded-[22px] flex flex-col justify-between h-[92px]">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-charcoal/60">
+                                    <i class="fa-solid fa-ticket text-amber-500"></i>
+                                    <span>Antrean</span>
+                                </div>
+                                <div class="text-xl font-extrabold text-charcoal">A-04</div>
+                                <div class="text-[9px] font-bold text-sage-700">Sisa 1 Pasien</div>
+                            </div>
+
+                            <div class="glass-card p-3 rounded-[22px] flex flex-col justify-between h-[92px]">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-charcoal/60">
+                                    <i class="fa-solid fa-clock text-sage-600"></i>
+                                    <span>Jadwal</span>
+                                </div>
+                                <div class="text-xl font-extrabold text-charcoal">08:40</div>
+                                <div class="text-[9px] font-semibold text-charcoal/55">12 Mei 2026</div>
+                            </div>
+
+                            <div class="glass-card p-3 rounded-[22px] flex flex-col justify-between h-[92px]">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-charcoal/60">
+                                    <i class="fa-solid fa-hospital text-teal-600"></i>
+                                    <span>Klinik</span>
+                                </div>
+                                <div class="text-xs font-extrabold text-charcoal leading-tight">PetCare Central</div>
+                                <div class="text-[9px] font-semibold text-charcoal/55">drh. Clara W.</div>
+                            </div>
+                        </div>
+
+                        <!-- Boarding Pass Style Reservation Ticket Card -->
+                        <div class="ticket-card p-4 shadow-glass flex justify-between items-stretch">
+                            <div class="flex-1 pr-3 flex flex-col justify-between">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <span class="text-[10px] text-charcoal/50 font-semibold block">Pasien</span>
+                                        <span class="text-lg font-extrabold text-charcoal tracking-tight">MOCHI</span>
+                                    </div>
+
+                                    <div class="flex flex-col items-center px-1">
+                                        <div class="px-2.5 py-0.5 rounded-full bg-sage-600 text-white text-[9px] font-bold flex items-center gap-1">
+                                            <span>30 mnt</span>
+                                            <i class="fa-solid fa-paw text-[8px]"></i>
+                                        </div>
+                                        <div class="w-14 border-b border-dashed border-sage-400 my-1"></div>
+                                        <span class="text-[9px] font-semibold text-charcoal/60">Checkup</span>
+                                    </div>
+
+                                    <div class="text-right">
+                                        <span class="text-[10px] text-charcoal/50 font-semibold block">Poli</span>
+                                        <span class="text-lg font-extrabold text-charcoal tracking-tight">VET-02</span>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-sage-200/60 my-3"></div>
+
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <span class="text-[9px] text-charcoal/50 font-semibold block">Ruang</span>
+                                        <span class="text-xs font-extrabold text-charcoal">R-02</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-charcoal/50 font-semibold block">Urutan</span>
+                                        <span class="text-xs font-extrabold text-charcoal">A-04</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-charcoal/50 font-semibold block">Dokter</span>
+                                        <span class="text-xs font-extrabold text-sage-700">drh. Clara</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-7 border-l border-dashed border-sage-300 pl-2 flex flex-col justify-between items-center py-1">
+                                <div class="w-full h-full barcode-vertical opacity-80 rounded-sm"></div>
+                            </div>
+                        </div>
+
+                        <!-- Dark Obsidian Progress Card (4 Tahap Layanan) -->
+                        <div onclick="cycleQueueStatus()" class="bg-charcoal text-white p-4 rounded-[26px] shadow-lg cursor-pointer transition hover:ring-2 hover:ring-mintAccent">
+                            <div class="flex justify-between items-center mb-2.5">
+                                <div>
+                                    <span class="text-[11px] font-semibold text-white/75 block">Status Layanan Klinik</span>
+                                    <span id="status-badge-label" class="text-xs font-extrabold text-mintAccent">● Sedang Dilayani</span>
+                                </div>
+                                <span id="status-percent" class="text-2xl font-extrabold tracking-tight">75%</span>
+                            </div>
+
+                            <div class="w-full h-8 bg-white/10 rounded-full p-1 flex items-center">
+                                <div id="status-bar-fill" class="h-full bg-white rounded-full transition-all duration-500 flex items-center justify-between px-2" style="width: 75%;">
+                                    <span class="w-5 h-5 rounded-full bg-sage-600 text-white flex items-center justify-center text-[9px]">
+                                        <i class="fa-solid fa-paw"></i>
+                                    </span>
+                                    <span class="w-5 h-5 rounded-full bg-sage-700 text-white flex items-center justify-center text-[9px]">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-1 text-[9px] font-bold text-white/55 mt-2 text-center">
+                                <span class="text-mintAccent">Menunggu</span>
+                                <span class="text-mintAccent">Dikonfirmasi</span>
+                                <span class="text-white underline">Dilayani</span>
+                                <span>Selesai</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CURVED NOTCH BOTTOM NAVIGATION BAR -->
+                    <div class="curved-nav-wrapper" data-active="antrean"></div>
+                </div>
+            </div>
+
+
+            <!-- =======================================================================
+                 5. HALAMAN PROFIL & RIWAYAT KESEHATAN
+                 ======================================================================= -->
+            <div id="card-profil" class="mockup-item flex flex-col items-center">
+                <div class="mb-3 flex items-center gap-2 bg-white/55 backdrop-blur-md px-4 py-1 rounded-full border border-white/70 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-sage-600"></span>
+                    <span class="text-xs font-bold text-sage-900 tracking-wide uppercase">5. Profil & Riwayat Medis</span>
+                </div>
+
+                <!-- Smartphone Frame -->
+                <div class="w-[348px] h-[750px] bg-gradient-to-b from-[#EFF5F1] via-[#E9F2EC] to-[#DFECE3] rounded-[50px] shadow-phone relative overflow-hidden flex flex-col select-none">
+                    
+                    <!-- Status Bar -->
+                    <div class="px-8 pt-4 pb-2 flex justify-between items-center text-xs font-bold text-charcoal z-20 shrink-0">
+                        <span>9:41</span>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-signal text-[10px]"></i>
+                            <i class="fa-solid fa-wifi text-[10px]"></i>
+                            <i class="fa-solid fa-battery-full text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Clean Owner Profile + Medical History Content -->
+                    <div class="px-6 pt-1 pb-28 flex-1 overflow-y-auto no-scrollbar flex flex-col justify-between">
+                        
+                        <!-- Glass Owner Profile Header -->
+                        <div class="glass-card p-3.5 rounded-[24px] flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80" alt="Nadia" class="w-12 h-12 rounded-2xl object-cover border border-white shadow-sm" onerror="this.src='https://placehold.co/100x100/35744B/FFF?text=N'">
+                                <div>
+                                    <h3 class="text-sm font-extrabold text-charcoal">Nadia Putri</h3>
+                                    <p class="text-[10.5px] text-charcoal/60 font-medium">Pemilik Hewan • 2 Pasien Aktif</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-extrabold bg-sage-600 text-white px-2.5 py-1 rounded-full">Member</span>
+                        </div>
+
+                        <!-- Kartu Pengingat Vaksinasi & Nutrisi (Glassmorphism) -->
+                        <div>
+                            <label class="text-[10.5px] font-bold uppercase tracking-wider text-charcoal/55 block mb-2">Pengingat Kesehatan</label>
+                            <div class="grid grid-cols-2 gap-2.5">
+                                <div class="glass-card bg-mintAccent/25 p-3 rounded-[22px] flex flex-col justify-between">
+                                    <div class="flex items-center justify-between">
+                                        <span class="w-7 h-7 rounded-full bg-sage-700 text-white flex items-center justify-center text-xs">
+                                            <i class="fa-solid fa-syringe"></i>
+                                        </span>
+                                        <span class="text-[9px] font-extrabold bg-white/80 text-sage-900 px-2 py-0.5 rounded-full">18 Mei</span>
+                                    </div>
+                                    <div class="mt-2.5">
+                                        <p class="text-[10px] font-semibold text-sage-900/70">Jadwal Vaksin</p>
+                                        <h4 class="text-xs font-extrabold text-charcoal">Rabies Booster</h4>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card bg-amber-100/50 p-3 rounded-[22px] flex flex-col justify-between">
+                                    <div class="flex items-center justify-between">
+                                        <span class="w-7 h-7 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">
+                                            <i class="fa-solid fa-pills"></i>
+                                        </span>
+                                        <span class="text-[9px] font-extrabold bg-white/80 text-amber-900 px-2 py-0.5 rounded-full">25 Mei</span>
+                                    </div>
+                                    <div class="mt-2.5">
+                                        <p class="text-[10px] font-semibold text-amber-900/70">Perawatan Rutin</p>
+                                        <h4 class="text-xs font-extrabold text-charcoal">Obat Cacing</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Riwayat Pemeriksaan & Vaksinasi (Clean Glass List) -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-[10.5px] font-bold uppercase tracking-wider text-charcoal/55">Riwayat Pemeriksaan</label>
+                                <span class="text-[10px] font-bold text-sage-700">Mochi (Kucing)</span>
+                            </div>
+
+                            <div class="space-y-2.5">
+                                <div class="glass-card p-3.5 rounded-[22px]">
+                                    <div class="flex justify-between items-start">
+                                        <div class="flex items-center gap-2.5">
+                                            <div class="w-8 h-8 rounded-xl bg-sage-100 text-sage-700 flex items-center justify-center text-xs">
+                                                <i class="fa-solid fa-stethoscope"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-xs font-extrabold text-charcoal">Pemeriksaan Umum & Gigi</h4>
+                                                <p class="text-[10px] text-charcoal/60 font-semibold">drh. Clara Wijaya • 02 Mei 2026</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-[9px] font-bold bg-sage-100 text-sage-800 px-2 py-0.5 rounded-full">Selesai</span>
+                                    </div>
+                                    <p class="mt-2 pt-2 border-t border-sage-200/50 text-[10.5px] text-charcoal/75">
+                                        Berat stabil 4.2 kg, suhu normal 38.5°C, kesehatan mulut sangat baik.
+                                    </p>
+                                </div>
+
+                                <div class="glass-card p-3.5 rounded-[22px]">
+                                    <div class="flex justify-between items-start">
+                                        <div class="flex items-center gap-2.5">
+                                            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">
+                                                <i class="fa-solid fa-shield-cat"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-xs font-extrabold text-charcoal">Vaksinasi Tricat Tahap 2</h4>
+                                                <p class="text-[10px] text-charcoal/60 font-semibold">drh. Hendra Kusuma • 14 Mar 2026</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-[9px] font-bold bg-mintAccent/40 text-sage-900 px-2 py-0.5 rounded-full">Lengkap</span>
+                                    </div>
+                                    <p class="mt-2 pt-2 border-t border-sage-200/50 text-[10.5px] text-charcoal/75">
+                                        Antibodi optimal, sertifikat vaksinasi digital telah diterbitkan.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CURVED NOTCH BOTTOM NAVIGATION BAR -->
+                    <div class="curved-nav-wrapper" data-active="profil"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==============================================================
+         JAVASCRIPT: RENDER CURVED NOTCH NAV & INTERACTIVE ANIMATIONS
+         ============================================================== -->
+    <script>
+        // Posisi horizontal (left px) untuk indikator aktif meluncur pada tiap tab
+        const navPositions = {
+            beranda:   { pillLeft: '9px',   barLeft: '27px',  isCenter: false },
+            hewan:     { pillLeft: '71px',  barLeft: '89px',  isCenter: false },
+            reservasi: { pillLeft: '128px', barLeft: '146px', isCenter: true  },
+            antrean:   { pillLeft: '185px', barLeft: '203px', isCenter: false },
+            profil:    { pillLeft: '247px', barLeft: '265px', isCenter: false }
+        };
+
+        let currentDisplayMode = 'all';
+
+        // Template HTML + SVG Curved Notch Bar Persis Gambar Referensi
+        function createCurvedNavHTML(activeMenu) {
+            const pos = navPositions[activeMenu] || navPositions.beranda;
+            const pillOpacity = pos.isCenter ? '0' : '1';
+
+            return `
+                <!-- SVG Frosted Glass Horizontal Bar dengan Deep Curved Center Notch -->
+                <svg class="curved-nav-svg" viewBox="0 0 316 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="glassGrad" x1="0" y1="0" x2="316" y2="62" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#F7FBF8" stop-opacity="0.94"/>
+                            <stop offset="50%" stop-color="#E6F2EA" stop-opacity="0.90"/>
+                            <stop offset="100%" stop-color="#EFF7F1" stop-opacity="0.94"/>
+                        </linearGradient>
+                        <linearGradient id="strokeGrad" x1="0" y1="0" x2="316" y2="62" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+                            <stop offset="50%" stop-color="#CBE0D1" stop-opacity="0.6"/>
+                            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Bentuk Kapsul Horizontal dengan Cekungan Melengkung Halus di Tengah -->
+                    <path d="M 31 0 
+                             L 106 0 
+                             C 121 0, 127 38, 158 38 
+                             C 189 38, 195 0, 210 0 
+                             L 285 0 
+                             A 31 31 0 0 1 316 31 
+                             A 31 31 0 0 1 285 62 
+                             L 31 62 
+                             A 31 31 0 0 1 0 31 
+                             A 31 31 0 0 1 31 0 Z" 
+                          fill="url(#glassGrad)" 
+                          stroke="url(#strokeGrad)" 
+                          stroke-width="1.5"/>
+                </svg>
+
+                <!-- Indikator Kapsul Luncur (Sliding Highlight Pill) -->
+                <div class="nav-sliding-pill" style="left: ${pos.pillLeft}; opacity: ${pillOpacity};"></div>
+                <!-- Garis Indikator Bawah (Sliding Bottom Bar) -->
+                <div class="nav-sliding-bar" style="left: ${pos.barLeft}; opacity: ${pillOpacity};"></div>
+
+                <!-- Tombol Utama Reservasi Menonjol di Tengah Cekungan -->
+                <button type="button" onclick="handleNavClick('reservasi')" 
+                        class="center-notch-btn ${activeMenu === 'reservasi' ? 'is-active' : ''}" 
+                        data-menu="reservasi" title="Reservasi Pemeriksaan">
+                    <i class="fa-regular fa-calendar-check text-[20px]"></i>
+                </button>
+
+                <!-- 5 Kolom Menu Navigasi -->
+                <div class="relative w-full h-[62px] mt-[16px] grid grid-cols-5 items-center px-1.5">
+                    
+                    <!-- 1. Beranda -->
+                    <button type="button" onclick="handleNavClick('beranda')" 
+                            class="nav-item-btn ${activeMenu === 'beranda' ? 'is-active' : ''}" 
+                            data-menu="beranda">
+                        <i class="fa-solid fa-house nav-icon"></i>
+                        <span class="nav-label">Beranda</span>
+                    </button>
+
+                    <!-- 2. Hewan Saya -->
+                    <button type="button" onclick="handleNavClick('hewan')" 
+                            class="nav-item-btn ${activeMenu === 'hewan' ? 'is-active' : ''}" 
+                            data-menu="hewan">
+                        <i class="fa-solid fa-paw nav-icon"></i>
+                        <span class="nav-label">Hewan Saya</span>
+                    </button>
+
+                    <!-- 3. Spacer Cekungan Tengah (Label Reservasi) -->
+                    <div onclick="handleNavClick('reservasi')" class="flex flex-col items-center justify-end h-full pb-1.5 cursor-pointer z-20">
+                        <span class="text-[9px] font-extrabold tracking-tight transition-all ${activeMenu === 'reservasi' ? 'text-sage-800 scale-105' : 'text-charcoal/50'}">
+                            Reservasi
+                        </span>
+                    </div>
+
+                    <!-- 4. Antrean -->
+                    <button type="button" onclick="handleNavClick('antrean')" 
+                            class="nav-item-btn ${activeMenu === 'antrean' ? 'is-active' : ''}" 
+                            data-menu="antrean">
+                        <i class="fa-solid fa-chart-simple nav-icon"></i>
+                        <span class="nav-label">Antrean</span>
+                    </button>
+
+                    <!-- 5. Profil -->
+                    <button type="button" onclick="handleNavClick('profil')" 
+                            class="nav-item-btn ${activeMenu === 'profil' ? 'is-active' : ''}" 
+                            data-menu="profil">
+                        <i class="fa-regular fa-user nav-icon"></i>
+                        <span class="nav-label">Profil</span>
+                    </button>
+
+                </div>
+            `;
+        }
+
+        // Render seluruh Bottom Navigation Bar saat halaman dimuat
+        function initAllNavbars() {
+            document.querySelectorAll('.curved-nav-wrapper').forEach(wrapper => {
+                const defaultActive = wrapper.getAttribute('data-active') || 'beranda';
+                wrapper.innerHTML = createCurvedNavHTML(defaultActive);
+            });
+        }
+
+        // Fungsi Utama Saat Menu Navigasi Diklik (Menjalankan Animasi & Berpindah Halaman)
+        function handleNavClick(targetMenu) {
+            const pos = navPositions[targetMenu];
+            if (!pos) return;
+
+            // Update visual & jalankan animasi pada setiap Bottom Navigation Bar
+            document.querySelectorAll('.curved-nav-wrapper').forEach(wrapper => {
+                const pill = wrapper.querySelector('.nav-sliding-pill');
+                const bar = wrapper.querySelector('.nav-sliding-bar');
+                const centerBtn = wrapper.querySelector('.center-notch-btn');
+                const itemBtns = wrapper.querySelectorAll('.nav-item-btn');
+
+                // 1. Geser Indikator Aktif dengan Transisi Halus
+                if (pill && bar) {
+                    pill.style.left = pos.pillLeft;
+                    bar.style.left = pos.barLeft;
+                    pill.style.opacity = pos.isCenter ? '0' : '1';
+                    bar.style.opacity = pos.isCenter ? '0' : '1';
+                }
+
+                // 2. Animasi Tombol Tengah (Reservasi)
+                if (centerBtn) {
+                    centerBtn.classList.remove('animate-orb-pop');
+                    if (targetMenu === 'reservasi') {
+                        centerBtn.classList.add('is-active');
+                        void centerBtn.offsetWidth; // Reflow trigger untuk mengulang animasi
+                        centerBtn.classList.add('animate-orb-pop');
+                    } else {
+                        centerBtn.classList.remove('is-active');
+                    }
+                }
+
+                // 3. Animasi Tombol Menu Kiri & Kanan
+                itemBtns.forEach(btn => {
+                    const menuName = btn.getAttribute('data-menu');
+                    const icon = btn.querySelector('.nav-icon');
+                    if (icon) icon.classList.remove('animate-nav-pop');
+
+                    if (menuName === targetMenu) {
+                        btn.classList.add('is-active');
+                        if (icon) {
+                            void icon.offsetWidth;
+                            icon.classList.add('animate-nav-pop');
+                        }
+                    } else {
+                        btn.classList.remove('is-active');
+                    }
+                });
+            });
+
+            // Sinkronisasi tampilan layar:
+            // Jika sedang dalam mode 1 layar (Single), langsung tampilkan layar yang dipilih.
+            // Jika sedang dalam mode Semua Layar (All), scroll halus ke layar yang dipilih dan beri efek highlight.
+            if (currentDisplayMode === 'single') {
+                switchMode('single', targetMenu, true);
+            } else {
+                const targetCard = document.getElementById('card-' + targetMenu);
+                if (targetCard) {
+                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    const phoneFrame = targetCard.querySelector('.rounded-\\[50px\\]');
+                    if (phoneFrame) {
+                        phoneFrame.classList.add('ring-4', 'ring-sage-600/60', 'transition-all', 'duration-300');
+                        setTimeout(() => {
+                            phoneFrame.classList.remove('ring-4', 'ring-sage-600/60');
+                        }, 900);
+                    }
+                }
+            }
+        }
+
+        // Fungsi Pengatur Mode Tampilan Atas (Semua Layar vs 1 Layar Fokus)
+        function switchMode(mode, screenKey = 'beranda', skipNavTrigger = false) {
+            currentDisplayMode = mode;
+            const allCards = document.querySelectorAll('.mockup-item');
+            const allTabs = document.querySelectorAll('.mode-tab');
+
+            allTabs.forEach(t => {
+                t.classList.remove('bg-sage-600', 'text-white', 'shadow-sm');
+                t.classList.add('text-sage-800');
+            });
+
+            const activeTabId = mode === 'all' ? 'mode-all' : 'mode-' + screenKey;
+            const activeTabEl = document.getElementById(activeTabId);
+            if (activeTabEl) {
+                activeTabEl.classList.add('bg-sage-600', 'text-white', 'shadow-sm');
+                activeTabEl.classList.remove('text-sage-800');
+            }
+
+            if (mode === 'all') {
+                allCards.forEach(c => c.style.display = 'flex');
+            } else {
+                allCards.forEach(c => {
+                    c.style.display = (c.id === 'card-' + screenKey) ? 'flex' : 'none';
+                });
+                if (!skipNavTrigger) {
+                    handleNavClick(screenKey);
+                }
+            }
+        }
+
+        // Interaksi Form Reservasi (Pilih Hewan & Layanan dengan Ultra-Transparent Glass Subcards)
+        let currentPet = 'Mochi';
+        let currentService = 'Pemeriksaan Umum';
+
+        function selectPet(btn, petName) {
+            currentPet = petName;
+            document.querySelectorAll('.pet-option').forEach(el => {
+                el.classList.remove('is-selected');
+                const chk = el.querySelector('.pet-check');
+                if (chk) {
+                    chk.classList.add('hidden');
+                    chk.classList.remove('flex');
+                }
+                const badge = el.querySelector('.pet-badge');
+                if (badge) {
+                    badge.className = 'pet-badge mt-0.5 px-2 py-0.5 rounded-full bg-slate-200/80 text-charcoal/65 text-[8px] font-bold leading-none';
+                }
+            });
+            btn.classList.add('is-selected');
+            const activeChk = btn.querySelector('.pet-check');
+            if (activeChk) {
+                activeChk.classList.remove('hidden');
+                activeChk.classList.add('flex');
+            }
+            const activeBadge = btn.querySelector('.pet-badge');
+            if (activeBadge) {
+                activeBadge.className = 'pet-badge mt-0.5 px-2 py-0.5 rounded-full bg-[#D3E8DA] text-[#1E5634] text-[8px] font-bold leading-none';
+            }
+            updateReservationSummary();
+        }
+
+        function selectService(btn, serviceName) {
+            currentService = serviceName;
+            document.querySelectorAll('.service-chip').forEach(el => {
+                el.classList.remove('is-selected');
+                const title = el.querySelector('.service-title');
+                if (title) {
+                    title.classList.remove('font-extrabold', 'text-[#164A2B]');
+                    title.classList.add('font-semibold', 'text-charcoal/80');
+                }
+            });
+            btn.classList.add('is-selected');
+            const activeTitle = btn.querySelector('.service-title');
+            if (activeTitle) {
+                activeTitle.classList.remove('font-semibold', 'text-charcoal/80');
+                activeTitle.classList.add('font-extrabold', 'text-[#164A2B]');
+            }
+            updateReservationSummary();
+        }
+
+        function updateReservationSummary() {
+            const summaryEl = document.getElementById('summary-text');
+            if (summaryEl) {
+                summaryEl.textContent = `Konfirmasi: ${currentPet} • ${currentService}`;
+            }
+        }
+
+        // Simulasi Siklus Status Antrean pada Halaman 4
+        const queueStates = [
+            { label: '● Menunggu Konfirmasi', percent: '25%', width: '28%' },
+            { label: '● Dikonfirmasi (Antrean A-04)', percent: '50%', width: '52%' },
+            { label: '● Sedang Dilayani', percent: '75%', width: '75%' },
+            { label: '● Pemeriksaan Selesai', percent: '100%', width: '100%' }
+        ];
+        let stateIdx = 2;
+
+        function cycleQueueStatus() {
+            stateIdx = (stateIdx + 1) % queueStates.length;
+            const current = queueStates[stateIdx];
+            document.getElementById('status-badge-label').textContent = current.label;
+            document.getElementById('status-percent').textContent = current.percent;
+            document.getElementById('status-bar-fill').style.width = current.width;
+        }
+
+        // Jalankan inisialisasi saat DOM siap
+        window.addEventListener('DOMContentLoaded', initAllNavbars);
+    </script>
+</body>
+</html>
